@@ -1,0 +1,20 @@
+name: Deploy Static Website
+
+on:
+  push:
+    branches:
+      - main  # Triggers the workflow when changes are pushed to 'main'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Deploys to 'gh-pages' branch
+          folder: ./  # Deploy everything in the repository root
