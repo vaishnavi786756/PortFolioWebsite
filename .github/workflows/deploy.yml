@@ -3,7 +3,7 @@ name: Deploy Static Website
 on:
   push:
     branches:
-      - main  # Triggers the workflow when changes are pushed to 'main'
+      - main  # Change this if your branch is different
 
 jobs:
   deploy:
@@ -13,8 +13,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Set up Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@github.com"
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages  # Deploys to 'gh-pages' branch
-          folder: ./  # Deploy everything in the repository root
+          branch: gh-pages  # Deployment branch
+          folder: ./         # Deploy the root folder
+          token: ${{ secrets.GITHUB_TOKEN }}
