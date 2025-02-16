@@ -3,7 +3,7 @@ name: Deploy Static Website
 on:
   push:
     branches:
-      - main  # Change this if your branch is different
+      - main  # Change this if your main branch has a different name
 
 jobs:
   deploy:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Prevents shallow clone issue
 
       - name: Set up Git user
         run: |
@@ -23,4 +25,5 @@ jobs:
         with:
           branch: gh-pages  # Deployment branch
           folder: ./         # Deploy the root folder
+          clean: true        # Cleans old files before deploying
           token: ${{ secrets.GITHUB_TOKEN }}
