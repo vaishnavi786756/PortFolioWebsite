@@ -1,0 +1,29 @@
+name: Deploy Static Website
+
+on:
+  push:
+    branches:
+      - main  # Change this if your main branch has a different name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Prevents shallow clone issue
+
+      - name: Set up Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Deployment branch
+          folder: ./         # Deploy the root folder
+          clean: true        # Cleans old files before deploying
+          token: ${{ secrets.GITHUB_TOKEN }}
